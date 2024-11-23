@@ -238,7 +238,7 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 
 	#Below imports all exchange tickers as at 30 Sep 17
 	import pandas as pd
-	ticker_df = pd.read_csv("/Users/deanbeeton/Desktop/Systems Stuff/Streamlit/Yahoo_Tickers.csv")
+	ticker_df = pd.read_csv("Yahoo_Tickers.csv")
 
 	toggle_label = (
 		"Find Description of my ticker"
@@ -415,7 +415,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	st.html("<h5>Universe of Australian Stock Exchange ETFs</h5>")
 	#Below imports meta data for all ASX ETFs as at 31 Jul 24
 	import pandas as pd
-	etf_detail_df = pd.read_csv("/Users/deanbeeton/Desktop/Systems Stuff/Streamlit/ETF_Details.csv")
+	etf_detail_df = pd.read_csv("ETF_Details.csv")
 	
 	#Displaying a sample of ASX ETF Meta Data to provide context
 	st.write("Below is a summary with key details of all ASX ETFs, :blue[double click on cells in the table to see all content.]")
@@ -918,7 +918,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 				
 			if len(selected_ticker_info) > 0:
 				selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE'])
-				ticker_df = pd.read_csv("/Users/deanbeeton/Desktop/Systems Stuff/Streamlit/Yahoo_Tickers.csv")
+				ticker_df = pd.read_csv("Yahoo_Tickers.csv")
 				selected_ticker_info_df = pd.merge(selected_ticker_info_df, ticker_df, left_on='symbol', right_on='Ticker', how='left', indicator=True)
 				selected_ticker_info_df = selected_ticker_info_df.drop(columns=['Ticker', 'Name', '_merge'])
 				selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=False, inplace = True)
