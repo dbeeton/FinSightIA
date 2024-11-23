@@ -1,0 +1,13 @@
+streamlit
+streamlit-option-menu
+sendgrid
+Pillow
+pandas_datareader
+yfinance
+pytickersymbols
+seaborn
+plotly
+plotly_express
+scipy
+scikit-learn
+stripe
