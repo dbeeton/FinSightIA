@@ -558,7 +558,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			close_price_df_tpd = close_price_df_tpd.mask(close_price_df_tpd==0).ffill()
 			#st.dataframe(close_price_df_tpd)
 		except:
-#			st.session_state.clicked = False
+			st.session_state.clicked = False
 			st.write("Please click :red[Run analysis on selection] once options have been selected")
 			
 		
