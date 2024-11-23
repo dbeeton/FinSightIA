@@ -866,7 +866,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			#Identification of proposed optimal portfolio allocation for the selected portfolio of ETFs/Stocks, note the caveat that past performance is an imperfect indicator of future performance
 			
 			st.html("<h5>Optimal portfolio investment allocation given calibration parameters, selected tickers and initial investment ignoring risk appetite limitations.</h5>")
-			st.write(':red[Note that past performance is an imperfect indication of future performance and this should not be considered to be financial advice but rather a useful tool contributing to the investment allocation decision.  It is not recommended that you allocate over 20% of your portfolio to a single stock (this cap would not apply to a broadly diversified ETF though).]')
+			st.write(':red[Note that past performance is an imperfect indication of future performance and this should not be considered to be financial advice but rather a useful tool contributing to the investment allocation decision.  Investors should consider implications of potential lack of diversification for positions representing 20%+ in single stocks (this would be less of a concern for broadly diversified ETF though).]')
 			
 			import numpy as np
 			Asset_Allocation = np.around(weights_max_sharpe, decimals=2)*initial_investment
