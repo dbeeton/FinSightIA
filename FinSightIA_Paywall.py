@@ -1,6 +1,4 @@
 #DEPENDANCIES DETAILED BELOW
-#ETF_Details.csv to be placed in the root directory in Github and change file path for etf_detail_df = pd.read_csv("/Users/deanbeeton/Desktop/Systems Stuff/Streamlit/ETF_Details.csv")
-#Yahoo_Tickers.csv to be placed in the root directory in Github and change file path for ticker_df = pd.read_csv("/Users/deanbeeton/Desktop/Systems Stuff/Streamlit/Yahoo_Tickers.csv")
 #pip install --upgrade pip
 #pip install streamlit
 #pip install pip install streamlit-option-menu
@@ -15,6 +13,7 @@
 #pip install stripe
 #pip install Pillow
 #pip install sendgrid
+#pip install sqlite3
 
 import os
 import streamlit as st
@@ -406,9 +405,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == True: 
 
-	if "update_strategy" in st.session_state:
-    		st.session_state.update_strategy = st.session_state.update_strategy
-	
 	html_code = """<h3 style='color: red;'>
 	  Assisting investors with their listed asset allocations
 	</h3>"""
@@ -475,19 +471,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	#Define the base currency for calculation of indexed prices abd returns
 	base_currency = st.selectbox("Base currency for calculation of indexed prices and returns", ["AUD","EUR","GBP","USD"], placeholder="AUD")
 	
-	st.html("<h5>Date range to use for base returns and correlation</h5>")
-	st.write("Ideally you should include a full economic cycle in the date range, please ensure that start and end dates selected are working days")
-		
-	import datetime as dt
-	from dateutil.relativedelta import relativedelta
-		
-	five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
-	start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
-	end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
-		
-	MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
-	MaxCalDate = dt.datetime.combine(end_calibration_date, dt.time.min)
-			
 	#Enable users to capture return adjustments
 	adjust_returns = st.checkbox("Tick this box if you would like to adjust returns")
 
@@ -579,6 +562,19 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		##NOW WE MAKE THE CALIBRATION DECISIONS
 		
 		st.write(":red[Defaults have been used to perform the initial run. Please change selections to match you preferences and click - Run analysis on selection above.  Note only assets which have price data for the full date range will be included in the analysis.]")
+		
+		st.html("<h5>Date range to use for base returns and correlation</h5>")
+		st.write("Ideally you should include a full economic cycle in the date range")
+		
+		import datetime as dt
+		from dateutil.relativedelta import relativedelta
+		
+		five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
+		start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
+		end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
+		
+		MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
+		MaxCalDate = dt.datetime.combine(end_calibration_date, dt.time.min)
 		
 		st.html("<h5>Investment details and risk free hurdle rate</h5>")
 		
