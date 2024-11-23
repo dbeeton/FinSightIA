@@ -405,7 +405,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == True: 
 
-	st.write(st.session_state['is_logged_in'])
+	st.session_state['is_logged_in'] = True
 	html_code = """<h3 style='color: red;'>
 	  Assisting investors with their listed asset allocations
 	</h3>"""
