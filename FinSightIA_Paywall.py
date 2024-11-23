@@ -105,7 +105,7 @@ if selected == "Home":
 			checkout_url = create_checkout_session(email) 
 			st.markdown(f"[Subscribe Here]({checkout_url})") 
 			conn.close() 	
-
+	
 if selected == "Investment Process": 
 	st.subheader(':red[Identifying Optimal Investments to deliver Investors Custom Strategy]') 
 	from PIL import Image
@@ -235,6 +235,8 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == False
 
 if selected == "Stock Information" and st.session_state['is_logged_in'] == True: 
 
+	st.session_state.is_logged_in = st.session_state.is_logged_in
+	
 	#Below imports all exchange tickers as at 30 Sep 17
 	import pandas as pd
 	ticker_df = pd.read_csv("Yahoo_Tickers.csv")
@@ -405,7 +407,8 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == True: 
 
-	st.session_state['is_logged_in'] = True
+	st.session_state.is_logged_in = st.session_state.is_logged_in
+	
 	html_code = """<h3 style='color: red;'>
 	  Assisting investors with their listed asset allocations
 	</h3>"""
