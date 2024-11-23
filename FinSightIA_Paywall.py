@@ -514,6 +514,8 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		st.session_state.clicked = True
 	
 	st.button('Run analysis on selection', on_click=click_button)
+
+	st.session_state.clicked = st.session_state.clicked
 	
 	if st.session_state.clicked:
 	
