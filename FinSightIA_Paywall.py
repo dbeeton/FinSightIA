@@ -552,7 +552,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 
 			return close_price_df_tpd 
 
-		st.write(st.session_state.clicked)
+		st.write({EFTTickers})
 		
 		try:		
 			close_price_df_tpd = get_stock_data_in_base(ETFTickers) 
