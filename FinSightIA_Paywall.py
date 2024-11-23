@@ -13,6 +13,8 @@
 #pip install scipy
 #pip install scikit-learn
 #pip install stripe
+#pip install Pillow
+#pip install sendgrid
 
 import os
 import streamlit as st
@@ -53,13 +55,13 @@ if selected == "Home":
 	#Setting up Stripe • Create a Stripe account and set up a product and pricing for your paywall. • Generate a checkout session URL to direct users to a Stripe-hosted payment page. • Use Stripe’s API keys in your app and store them as environment variables in Streamlit Cloud.
 	import stripe 
 	import os 
-	stripe.api_key = os.getenv('STRIPE_API_KEY') # Load API key from environment 
+	stripe.api_key = "sk_test_51QN6C6LmlMz4nhM3Kztut5CwKJ1Zv9o6B5mA42QOvP6sXsKKJBvmwqLev0Zjr5GhK9p5MVRoPg0Y5poofFX36Pdz001fYspjAz" # Load API key from environment 
 	
 	def create_checkout_session(email): 
 		session = stripe.checkout.Session.create( 
 			payment_method_types=['card'], 
 			line_items=[{ 
-				'price': 'price_id', # Replace with Stripe's price ID for your product 
+				'price': 'price_1QN6FvLmlMz4nhM3Z3ahECh1', # Replace with Stripe's price ID for your product 
 				'quantity': 1, 
 			}], 
 			mode='subscription', 
@@ -82,9 +84,9 @@ if selected == "Home":
 	st.write("There are many financial advisors and investors who feel that they are searching for a needle in a haystack when it comes to selecting the best investments to match their requirements and risk profile.  It often just comes down to educated guesswork as there is so much qualitative financial information available which is often conflicting and dispersed. The aim of this product is to help making information available to financial advisors and their clients which identifies assets which match the clients investment preferences and objectives and then seek to construct the optimal portfolio.")
 	st.write("")
 	st.write("It should also be noted that FinSightIA does not receive any referral fees from ETF Managers or Investment Platform Providers and that all of the content on this site is focussed on supporting financial advisors and their clients in selecting the most appropriate investments and investment platforms.")
-	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) and :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility and correlation) you will need to subscribe for premium access at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
+	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) and :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
 
-	email = st.text_input("Enter your email") 
+	email = st.text_input("Enter your email, :red[required for sign in and subscription]") 
 	if st.button("Log In"): 
 		conn = sqlite3.connect('users.db') 
 		cursor = conn.cursor() 
@@ -228,6 +230,9 @@ if selected == "Investment Objectives":
 		with st.container(border=True):
 			st.html("<h5>Long or Short</h5>")
 			st.write("Short Sell the market with ease and profit when the market is going down. But be very careful of short/bear strategies as long run returns tend to be positive.")
+
+if selected == "Stock Information" and st.session_state['is_logged_in'] == False: 
+	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) you will need to subscribe for premium access on the home page at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
 
 if selected == "Stock Information" and st.session_state['is_logged_in'] == True: 
 
@@ -395,7 +400,10 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 			<p class="a">{Stock_Desc}</p>
 			"""		
 			st.markdown(html_str, unsafe_allow_html=True)	
-	
+
+if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == False: 	
+	st.write("In order to access the :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access on the home page at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
+
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == True: 
 
 	html_code = """<h3 style='color: red;'>
@@ -563,7 +571,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		from dateutil.relativedelta import relativedelta
 		
 		five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
-		start_calibration_date = st.date_input("Start of calibration window", value=five_yrs_ago)
+		start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
 		end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
 		
 		MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
@@ -922,6 +930,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			if len(selected_etf_info) > 0:
 				selected_etf_info_df = pd.DataFrame(selected_etf_info, columns=['symbol', 'longName', 'currency', 'previousClose', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'totalAssets'])
 				st.dataframe(selected_etf_info_df, hide_index=True)
+				st.write("For ETFs with lower asset sizes (<AUD1bn) there may be liquidity issues (or larger discounts on selling particularly inadverse market conditions).")				
 			else:
 				pass
 						
