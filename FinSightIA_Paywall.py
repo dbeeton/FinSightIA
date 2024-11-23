@@ -501,7 +501,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	
 	st.button('Run analysis on selection', on_click=click_button)
 	
-	if st.session_state.clicked:
+	if st.session_state.clicked == True:
 	
 		#Loading the historic price details for the ETFs/Stocks to be optimised
 		import yfinance as yf 
