@@ -35,6 +35,8 @@ st.html(
 	"<head> <!--	This website is a resource available to investors and financial advisors to better understand investment alternatives and gain assistance on the asset allocation decision and best platform to use to invest.  Note that past performance is an imperfect indication of future performance and this should not be considered to be financial advice but rather a useful tool contributing to the investment allocation decision.</head> -->"
 )
 
+st.session_state.update(st.session_state)
+
 if selected == "Home": 
 
 	#Database Setup (SQLite) • Use SQLite to store user data, subscription status, and access permissions. • In app.py, initialize a simple SQLite database that records user information (e.g., email, subscription_status, and access_expiration). 
