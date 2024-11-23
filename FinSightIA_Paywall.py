@@ -556,7 +556,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		
 		try:		
 			close_price_df_tpd = get_stock_data_in_base(ETFTickers) 
-			
+			st.dataframe(close_price_df_tpd)
 			#If prices are missing for a given date then keep the price the same as the previous business day
 			#close_price_df_tpd.update(close_price_df_tpd.iloc[:, 0:].replace([0,'0'], np.nan).ffill())
 			close_price_df_tpd.sort_index(inplace=True)
