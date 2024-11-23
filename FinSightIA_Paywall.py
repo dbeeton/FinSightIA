@@ -472,19 +472,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	else:
 		ETFTickers = GenTickers
 
-	st.html("<h5>Date range to use for base returns and correlation</h5>")
-	st.write("Ideally you should include a full economic cycle in the date range")
-	
-	import datetime as dt
-	from dateutil.relativedelta import relativedelta
-	
-	five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
-	start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
-	end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
-	
-	MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
-	MaxCalDate = dt.datetime.combine(end_calibration_date, dt.time.min)		
-	
 	#Define the base currency for calculation of indexed prices abd returns
 	base_currency = st.selectbox("Base currency for calculation of indexed prices and returns", ["AUD","EUR","GBP","USD"], placeholder="AUD")
 	
@@ -514,8 +501,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		st.session_state.clicked = True
 	
 	st.button('Run analysis on selection', on_click=click_button)
-
-	st.session_state.clicked = st.session_state.clicked
 	
 	if st.session_state.clicked:
 	
@@ -581,6 +566,19 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		##NOW WE MAKE THE CALIBRATION DECISIONS
 		
 		st.write(":red[Defaults have been used to perform the initial run. Please change selections to match you preferences and click - Run analysis on selection above.  Note only assets which have price data for the full date range will be included in the analysis.]")
+	
+		st.html("<h5>Date range to use for base returns and correlation</h5>")
+		st.write("Ideally you should include a full economic cycle in the date range")
+		
+		import datetime as dt
+		from dateutil.relativedelta import relativedelta
+		
+		five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
+		start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
+		end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
+		
+		MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
+		MaxCalDate = dt.datetime.combine(end_calibration_date, dt.time.min)		
 		
 		st.html("<h5>Investment details and risk free hurdle rate</h5>")
 		
