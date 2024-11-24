@@ -548,7 +548,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 					pass					
 
 			# Combine all tickers into a single DataFrame 
-			close_price_df_tpd = pd.DataFrame([data_in_base]) 
+			close_price_df_tpd = pd.DataFrame(data_in_base) 
 
 			return close_price_df_tpd 
 
