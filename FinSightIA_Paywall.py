@@ -510,6 +510,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		import yfinance as yf 
 		import pandas as pd
 		import streamlit as st
+		import sys
 
 		st.write(f"Python version: {sys.version}")
 		st.write(f"YFinance version: {yf.__version__}")
