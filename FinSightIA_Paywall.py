@@ -586,7 +586,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			five_yrs_ago=five_yrs_ago
 
 		start_calibration_date = st.date_input("Start of calibration window, please choose a weekday", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
-		end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
+		end_calibration_date = st.date_input("End of calibration window", min_value = dt.date(2007, 1, 1), value="default_value_today")
 		
 		MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
 		MaxCalDate = dt.datetime.combine(end_calibration_date, dt.time.min)		
