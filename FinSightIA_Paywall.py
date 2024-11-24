@@ -60,7 +60,7 @@ if selected == "Home":
 		session = stripe.checkout.Session.create( 
 			payment_method_types=['card'], 
 			line_items=[{ 
-				'price': 'price_1QN6FvLmlMz4nhM3Z3ahECh1', # Replace with Stripe's price ID for your product 
+				'price': 'price_1QOXVILmlMz4nhM3F06tNH7Q', # Replace with Stripe's price ID for your product 
 				'quantity': 1, 
 			}], 
 			mode='subscription', 
@@ -83,7 +83,7 @@ if selected == "Home":
 	st.write("There are many financial advisors and investors who feel that they are searching for a needle in a haystack when it comes to selecting the best investments to match their requirements and risk profile.  It often just comes down to educated guesswork as there is so much qualitative financial information available which is often conflicting and dispersed. The aim of this product is to help making information available to financial advisors and their clients which identifies assets which match the clients investment preferences and objectives and then seek to construct the optimal portfolio.")
 	st.write("")
 	st.write("It should also be noted that FinSightIA does not receive any referral fees from ETF Managers or Investment Platform Providers and that all of the content on this site is focussed on supporting financial advisors and their clients in selecting the most appropriate investments and investment platforms.")
-	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) and :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
+	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) and :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access at a cost of AUD50 per month (:blue[refer to Investment Process page for examples of premium modules]).")
 
 	email = st.text_input("Enter your email, :red[required for sign in and subscription]") 
 	if st.button("Log In"): 
