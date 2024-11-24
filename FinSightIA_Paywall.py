@@ -109,7 +109,7 @@ if selected == "Home":
 if selected == "Investment Process": 
 	st.subheader(':red[Identifying Optimal Investments to deliver Investors Custom Strategy]') 
 	from PIL import Image
-	investment_process_img = Image.open("Investment_Process.jpg")
+	investment_process_img = Image.open("Investment_process.jpg")
 	st.image(investment_process_img)	
 	
 	#Link to examples of stock_info and portfolio optimiser tabs
