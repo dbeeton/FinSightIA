@@ -577,7 +577,15 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		from dateutil.relativedelta import relativedelta
 		
 		five_yrs_ago = dt.datetime.now() - relativedelta(years=5)
-		start_calibration_date = st.date_input("Start of calibration window", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
+		five_yrs_ago_weekday = five_yrs_ago.weekday()
+		if five_yrs_ago_weekday == 5:
+			five_yrs_ago = five_yrs_ago + dt.timedelta(days=2)
+		elif five_yrs_ago_weekday == 6:
+			five_yrs_ago = five_yrs_ago + dt.timedelta(days=1)
+		else:
+			five_yrs_ago=five_yrs_ago
+
+		start_calibration_date = st.date_input("Start of calibration window, please choose a weekday", min_value = dt.date(2007, 1, 1), value=five_yrs_ago)
 		end_calibration_date = st.date_input("End of calibration window", value="default_value_today")
 		
 		MinCalDate = dt.datetime.combine(start_calibration_date, dt.time.min)
@@ -703,7 +711,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			
 			#This produces the correlation matrix for ETF/Stock returns, low correlation would indicate good diversification opportunities
 			
-			st.write("Below is the matrix of return correlations between selected assets: ")	
+			st.write("Below is the matrix of return correlations between selected assets, note that low correlation i.e. < 0.2 or 20% would be indicative of a good diversification opportunity (a correlation of 1 would indicate that it is essentially the same asset): ")	
 			
 			scaled_return_df = scaled_price_df.pct_change(periods=1).fillna(0)
 			
