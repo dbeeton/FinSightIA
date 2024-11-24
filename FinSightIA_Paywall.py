@@ -508,8 +508,9 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		
 		#Loading the historic price details for the ETFs/Stocks to be optimised
 		import yfinance as yf 
-		import pandas as pd 
-		import time
+		import pandas as pd
+		import streamlit as st
+
 		@st.cache_data
 		def get_stock_data_in_base(tickers):
 			""" Fetches stock price data for a list of tickers in various currencies and converts them to AUD. 
@@ -528,7 +529,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 					currency = stock.info["currency"]
 			
 					# Download historical price data for the ticker 
-					stock_data = yf.download(ticker, period="max", progress=False)['Adj Close'] 
+					stock_data = yf.download(ticker, period="max", interval="1d", progress=False)['Adj Close'] 
 			
 					# If currency is already AUD, no conversion needed 
 					if {currency} == {base_currency}: 
@@ -536,7 +537,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 					else: 
 						# Get the exchange rate from the stock's currency to AUD 
 						fx_ticker = f"{currency}{base_currency}=X" # Ticker format for currency pairs in Yahoo Finance 
-						fx_data = yf.download(fx_ticker, period="max", progress=False)['Adj Close'] 
+						fx_data = yf.download(fx_ticker, period="max", interval="1d", progress=False)['Adj Close'] 
 			
 						#Align the exchange rate data with stock data (reindex to match dates)
 						fx_data = fx_data.reindex(stock_data.index).ffill().bfill()
@@ -546,7 +547,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	
 					# Add the AUD converted data to the dictionary 
 					data_in_base[ticker] = stock_data_base 
-					time.sleep(1)
 				except:
 					pass					
 
