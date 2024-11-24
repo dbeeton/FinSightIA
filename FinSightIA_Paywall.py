@@ -509,6 +509,8 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		#Loading the historic price details for the ETFs/Stocks to be optimised
 		import yfinance as yf 
 		import pandas as pd 
+		import time
+		@st.cache_data
 		def get_stock_data_in_base(tickers):
 			""" Fetches stock price data for a list of tickers in various currencies and converts them to AUD. 
 			Parameters: 
@@ -544,6 +546,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	
 					# Add the AUD converted data to the dictionary 
 					data_in_base[ticker] = stock_data_base 
+					time.sleep(1)
 				except:
 					pass					
 
@@ -551,9 +554,6 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			close_price_df_tpd = pd.DataFrame(data_in_base) 
 
 			return close_price_df_tpd 
-
-		close_price_df_tpd = get_stock_data_in_base(ETFTickers) 
-		st.dataframe(close_price_df_tpd)
 		
 		try:		
 			close_price_df_tpd = get_stock_data_in_base(ETFTickers) 
