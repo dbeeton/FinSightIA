@@ -706,7 +706,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 				'Return': '{:.2f}%'.format,
 				'Volatility': '{:.2f}%'.format,
 			})
-			st.write("Below are the mean annual returns and volatilities of ETFs/Stocks over the calibration window: ")
+			st.write("Below are the mean annual returns and volatilities (high volatility = large variance in returns i.e. higher risk) of ETFs/Stocks over the calibration window: ")
 			st.write(asset_return_risk_df_form)
 			
 			#This produces the correlation matrix for ETF/Stock returns, low correlation would indicate good diversification opportunities
