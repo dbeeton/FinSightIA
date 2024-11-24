@@ -54,7 +54,7 @@ if selected == "Home":
 	#Setting up Stripe • Create a Stripe account and set up a product and pricing for your paywall. • Generate a checkout session URL to direct users to a Stripe-hosted payment page. • Use Stripe’s API keys in your app and store them as environment variables in Streamlit Cloud.
 	import stripe 
 	import os 
-	stripe.api_key = "sk_test_51QN6C6LmlMz4nhM3Kztut5CwKJ1Zv9o6B5mA42QOvP6sXsKKJBvmwqLev0Zjr5GhK9p5MVRoPg0Y5poofFX36Pdz001fYspjAz" # Load API key from environment 
+	stripe.api_key = "pk_test_51QN6C6LmlMz4nhM3Zu9JIJB0MUR1Fh6jC62fadoWW9wYRntljwu8CW9sICK4PQ317wwDSHlzuEUMeeNd6eYooIyi00qWfPtrPh" # Load API key from environment 
 	
 	def create_checkout_session(email): 
 		session = stripe.checkout.Session.create( 
