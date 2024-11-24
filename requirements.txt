@@ -3,7 +3,7 @@ streamlit-option-menu
 sendgrid
 Pillow
 pandas_datareader
-yfinance
+yfinance==0.2.44
 pytickersymbols
 seaborn
 plotly
