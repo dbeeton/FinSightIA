@@ -511,6 +511,8 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		import pandas as pd
 		import streamlit as st
 
+		st.write(f"Python version: {sys.version}")
+		st.write(f"YFinance version: {yf.__version__}")
 		@st.cache_data
 		def get_stock_data_in_base(tickers):
 			""" Fetches stock price data for a list of tickers in various currencies and converts them to AUD. 
