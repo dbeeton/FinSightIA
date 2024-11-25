@@ -1,2 +1,2 @@
-[ui]
-hideEditButton = true
+[server]
+enableXsrfProtection = false
