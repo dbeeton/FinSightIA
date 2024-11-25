@@ -1,4 +1,6 @@
 [ui]
 hideEditButton = true
+hideToolbar = true
 [server]
+headless = True
 enableXsrfProtection = false
