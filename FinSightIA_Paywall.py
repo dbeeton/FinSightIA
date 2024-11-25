@@ -231,7 +231,7 @@ if selected == "Investment Objectives":
 			st.write("Short Sell the market with ease and profit when the market is going down. But be very careful of short/bear strategies as long run returns tend to be positive.")
 
 if selected == "Stock Information" and st.session_state['is_logged_in'] == False: 
-	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) you will need to subscribe for premium access on the home page at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
+	st.write("In order to access the :blue[Stock Information] (identification of good value stocks which match your allocation preferences) you will need to subscribe for premium access on the home page at a cost of AUD50 per month (:blue[refer to Investment Process page for examples of premium modules]).")
 
 if selected == "Stock Information" and st.session_state['is_logged_in'] == True: 
 
@@ -371,7 +371,7 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE']]
 				selected_ticker_info.append(stock_items) 
 			else:
-				pass
+				print("Currently unable to retrieve description of Exchange Traded Funds, for ASX ETF descriptions refer to Portfolio Optimisation Module") 
 		except Exception as e:
 			print(f"Failed to retrieve data for {StockTicker}: {e}") 
 				
@@ -403,7 +403,7 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 			st.markdown(html_str, unsafe_allow_html=True)	
 
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == False: 	
-	st.write("In order to access the :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access on the home page at a cost of AUD150 per annum (:blue[refer to Investment Process page for examples of premium modules]).")
+	st.write("In order to access the :blue[Portfolio Optimisation Module] (determining the optimal mix of assets based on asset return, volatility, correlation and other factors) you will need to subscribe for premium access on the home page at a cost of AUD50 per month (:blue[refer to Investment Process page for examples of premium modules]).")
 
 if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_in'] == True: 
 
