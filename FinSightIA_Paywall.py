@@ -371,7 +371,7 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE']]
 				selected_ticker_info.append(stock_items) 
 			else:
-				print("Currently unable to retrieve description of Exchange Traded Funds, for ASX ETF descriptions refer to Portfolio Optimisation Module") 
+				pass
 		except Exception as e:
 			print(f"Failed to retrieve data for {StockTicker}: {e}") 
 				
@@ -383,9 +383,13 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 		st.write("In simple terms, a good P/E (Price divided by Earnings) ratio for an established company is lower than 20 (average across regions and industries is usually 20-25). When looking at the P/E ratio alone, the lower it is, the better.  It is however more meaningful to compare P/E Ratio for a stock to the average of the sector/industry from which it derives the majority of its income.  Also note that it is difficult to set guidelines for startups where future earnings are quite uncertain.")
 
 		def getstockinfo(Stock_Ticker):
-			import yfinance as yf
-			stock = yf.Ticker(Stock_Ticker)
-			return stock.info['longBusinessSummary']	
+			try:
+				import yfinance as yf
+				stock = yf.Ticker(Stock_Ticker)
+				return stock.info['longBusinessSummary']	
+			except:
+				print("Currently unable to retrieve description of Exchange Traded Funds, for ASX ETF descriptions refer to Portfolio Optimisation Module") 
+		
 		st.divider()
 		st.markdown("The description of " + StockTicker + " is : ")		
 		if StockTicker == "":
