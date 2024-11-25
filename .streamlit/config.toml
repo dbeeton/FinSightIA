@@ -2,5 +2,5 @@
 hideEditButton = true
 hideToolbar = true
 [server]
-headless = True
+headless = true
 enableXsrfProtection = false
