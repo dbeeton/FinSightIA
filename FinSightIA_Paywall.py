@@ -18,6 +18,7 @@
 import os
 import streamlit as st
 
+st.set_option('server.hideEditButton', True)
 st.set_page_config(layout="wide")
 
 from streamlit_option_menu import option_menu
