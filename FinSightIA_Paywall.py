@@ -311,14 +311,14 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 				try:
 					result = yf.Ticker(ticker).info
 					if result['quoteType'] != 'ETF':
-						stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE']]
+						stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
 						selected_ticker_info.append(stock_items) 
 					else:
 						continue
 				except Exception as e:
 					print(f"Failed to retrieve data for {ticker}: {e}") 
 					
-			selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE'])
+			selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
 			
 			st.write(":blue[Below is a list of stocks in the region and category/industry selected, ordered by PE ratio. A low PE ratio could be indicative of good value.]")
 			selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
@@ -368,14 +368,14 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 		try:
 			result = yf.Ticker(StockTicker).info
 			if result['quoteType'] != 'ETF':
-				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE']]
+				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
 				selected_ticker_info.append(stock_items) 
 			else:
 				pass
 		except Exception as e:
 			print(f"Failed to retrieve data for {StockTicker}: {e}") 
 				
-		selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE'])
+		selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
 		
 		st.write(":blue[Below is some key market data for the selected stock. A low PE ratio could be indicative of good value.]")
 		selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
@@ -923,7 +923,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 				result = yf.Ticker(ticker).info
 				if result['quoteType'] != 'ETF':
 					try:
-						stock_items = [result['symbol'], result['longName'], result['sector'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE']]
+						stock_items = [result['symbol'], result['longName'], result['sector'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
 						selected_ticker_info.append(stock_items) 
 					except:
 						pass
@@ -935,7 +935,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 						pass
 				
 			if len(selected_ticker_info) > 0:
-				selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE'])
+				selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
 				ticker_df = pd.read_csv("Yahoo_Tickers.csv")
 				selected_ticker_info_df = pd.merge(selected_ticker_info_df, ticker_df, left_on='symbol', right_on='Ticker', how='left', indicator=True)
 				selected_ticker_info_df = selected_ticker_info_df.drop(columns=['Ticker', 'Name', '_merge'])
