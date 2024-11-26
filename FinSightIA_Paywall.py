@@ -896,9 +896,9 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 			col5, col6 = st.columns((1,1))
 			with col5:
 				st.dataframe(list_of_investments_df, hide_index=True)
-				st.markdown('''
-					[Get information on stock intrinsic value](https://www.alphaspread.com/)
-				''')
+				#st.markdown('''
+				#	[Get information on stock intrinsic value](https://www.alphaspread.com/)
+				#''')
 			with col6:
 				fig = px.pie(list_of_investments_df, values='Investment_Amount', names='Ticker')
 				st.plotly_chart(fig, use_container_width=True)
