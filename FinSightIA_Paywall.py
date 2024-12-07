@@ -106,9 +106,9 @@ if selected == "Home":
 			st.markdown(f"[Subscribe Here]({checkout_url})") 
 			conn.close() 	
 
-st.write("The data in FinSightIA is primarily sourced from Yahoo Finance and as such users of this application should ensure that they have the appropriate licenses to access and use this data.")
-st.write("Should you have any queries or issues please contact admin@finsightia.com")
-st.markdown('<a href="mailto:admin@finsightia.com">Contact us !</a>', unsafe_allow_html=True)
+	st.write("The data in FinSightIA is primarily sourced from Yahoo Finance and as such users of this application should ensure that they have the appropriate licenses to access and use this data.")
+	st.write("Should you have any queries or issues please contact admin@finsightia.com")
+	st.markdown('<a href="mailto:admin@finsightia.com">Contact us !</a>', unsafe_allow_html=True)
 
 if selected == "Investment Process": 
 	st.subheader(':red[Identifying Optimal Investments to deliver Investors Custom Strategy]') 
