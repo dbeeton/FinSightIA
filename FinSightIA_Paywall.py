@@ -105,7 +105,11 @@ if selected == "Home":
 			checkout_url = create_checkout_session(email) 
 			st.markdown(f"[Subscribe Here]({checkout_url})") 
 			conn.close() 	
-	
+
+st.write("The data in FinSightIA is primarily sourced from Yahoo Finance and as such users of this application should ensure that they have the appropriate licenses to access and use this data.")
+st.write("Should you have any queries or issues please contact admin@finsightia.com")
+st.markdown('<a href="mailto:admin@finsightia.com">Contact us !</a>', unsafe_allow_html=True)
+
 if selected == "Investment Process": 
 	st.subheader(':red[Identifying Optimal Investments to deliver Investors Custom Strategy]') 
 	from PIL import Image
@@ -417,6 +421,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 	  Assisting investors with their listed asset allocations
 	</h3>"""
 	st.markdown(html_code, unsafe_allow_html=True)
+	st.write("In using the portfolio optimiser it is necessary to consider an appropriate comparative window in determining asset volatility and correlation. It is also important that you use return adjustments to reflect changed return expectations i.e. dial down (up) returns for assets which are viewed as likely to perform worse (better) over the investment horizon than the calibration window (in equivalent annual terms).  Financial Advisors are well positioned to assist Investors in making these critical decisions.")
 	##DISPLAY UNIVERSE OF AUSTRALIAN ETFs
 	
 	st.html("<h5>Universe of Australian Stock Exchange ETFs</h5>")
@@ -477,7 +482,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 		ETFTickers = GenTickers
 
 	#Define the base currency for calculation of indexed prices abd returns
-	base_currency = st.selectbox("Base currency for calculation of indexed prices and returns", ["AUD","EUR","GBP","USD"], placeholder="AUD")
+	base_currency = st.selectbox("Base currency for calculation of indexed prices and returns (usually the currency in which you expect to incur most of your costs through time)", ["AUD","EUR","GBP","USD"], placeholder="AUD")
 	
 	#Enable users to capture return adjustments
 	adjust_returns = st.checkbox("Tick this box if you would like to adjust returns")
