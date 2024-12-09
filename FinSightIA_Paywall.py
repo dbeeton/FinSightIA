@@ -325,8 +325,8 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 			selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', '52WeekChange', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'marketCap', 'forwardPE', 'forwardEps', 'returnOnEquity', 'recommendationKey', 'firstTradeDateEpochUtc', 'website'])
 			selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
 			selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
-			selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange']*100.map("{:.2f}%".format)
-			selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity']*100.map("{:.2f}%".format)
+			selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange'].mul(100).map("{:.2f}%".format)
+			selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity'].mul(100).map("{:.2f}%".format)
 			
 			st.write(":blue[Below is a list of stocks in the region and category/industry selected, ordered by PE ratio. A low PE ratio could be indicative of good value.]")
 			selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
@@ -389,8 +389,8 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 		selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
 		selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
 		selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
-		selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange']*100.map("{:.2f}%".format)
-		selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity']*100.map("{:.2f}%".format)
+		selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange'].mul(100).map("{:.2f}%".format)
+		selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity'].mul(100).map("{:.2f}%".format)
 		st.dataframe(selected_ticker_info_df, hide_index=True)
 		st.write("In simple terms, a good P/E (Price divided by Earnings) ratio for an established company is lower than 20 (average across regions and industries is usually 20-25). When looking at the P/E ratio alone, the lower it is, the better.  It is however more meaningful to compare P/E Ratio for a stock to the average of the sector/industry from which it derives the majority of its income.  Also note that it is difficult to set guidelines for startups where future earnings are quite uncertain.")
 
@@ -955,8 +955,8 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 				selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=False, inplace = True)
 				selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
 				selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
-				selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange']*100.map("{:.2f}%".format)
-				selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity']*100.map("{:.2f}%".format)
+				selected_ticker_info_df["52WeekChange"] = selected_ticker_info_df['52WeekChange'].mul(100).map("{:.2f}%".format)
+				selected_ticker_info_df["returnOnEquity"] = selected_ticker_info_df['returnOnEquity'].mul(100).map("{:.2f}%".format)
 				st.dataframe(selected_ticker_info_df, hide_index=True)
 				st.write("In simple terms, a good P/E (Price divided by Earnings) ratio for an established company is lower than 20 (average across regions and industries is usually 20-25). When looking at the P/E ratio alone, the lower it is, the better.  It is however more meaningful to compare P/E Ratio for a stock to the average of the sector/industry from which it derives the majority of its income.  Also note that it is difficult to set guidelines for startups where future earnings are quite uncertain.")
 			else:
