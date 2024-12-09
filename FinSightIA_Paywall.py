@@ -262,9 +262,9 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 	ticker_category_unique_list = ticker_category_unique.tolist()
 
 	if toggle_label == "Find me stocks based on region/activity/description keyword/s":
-		Ticker_Country = st.multiselect("Ticker Country", ticker_country_unique_list)
-		Ticker_Category = st.multiselect("Ticker Category", ticker_category_unique_list)
-		Description_Filter_Phrase = st.text_input("Ticker Description Filter Phrase", "")
+		Ticker_Country = st.multiselect("Ticker Country (required)", ticker_country_unique_list)
+		Ticker_Category = st.multiselect("Ticker Category (required)", ticker_category_unique_list)
+		Description_Filter_Phrase = st.text_input("Ticker Description Filter Phrase (optional)", "")
 		reduced_ticker_df = ticker_df[ticker_df["Country"].isin(Ticker_Country)  == True]
 		reduced_ticker_df = reduced_ticker_df[reduced_ticker_df["Category Name"].isin(Ticker_Category)  == True]
 		reduced_ticker_df.sort_values(by = 'Ticker',  ascending=True, inplace = True)
@@ -315,14 +315,16 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 				try:
 					result = yf.Ticker(ticker).info
 					if result['quoteType'] != 'ETF':
-						stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
+						stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], result['52WeekChange'], result['fiftyTwoWeekLow'], result['fiftyTwoWeekHigh'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['forwardEps'], result['debtToEquity'], result['returnOnEquity'], result['recommendationKey'], result['firstTradeDateEpochUtc'], result['website']]
 						selected_ticker_info.append(stock_items) 
 					else:
 						continue
 				except Exception as e:
 					print(f"Failed to retrieve data for {ticker}: {e}") 
 					
-			selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
+			selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', '52WeekChange', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'marketCap', 'trailingPE', 'forwardPE', 'forwardEps', 'debtToEquity', 'returnOnEquity', 'recommendationKey', 'firstTradeDateEpochUtc', 'website'])
+			selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
+			selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
 			
 			st.write(":blue[Below is a list of stocks in the region and category/industry selected, ordered by PE ratio. A low PE ratio could be indicative of good value.]")
 			selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
@@ -372,17 +374,19 @@ if selected == "Stock Information" and st.session_state['is_logged_in'] == True:
 		try:
 			result = yf.Ticker(StockTicker).info
 			if result['quoteType'] != 'ETF':
-				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
+				stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], result['52WeekChange'], result['fiftyTwoWeekLow'], result['fiftyTwoWeekHigh'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['forwardEps'], result['debtToEquity'], result['returnOnEquity'], result['recommendationKey'], result['firstTradeDateEpochUtc'], result['website']]
 				selected_ticker_info.append(stock_items) 
 			else:
 				pass
 		except Exception as e:
 			print(f"Failed to retrieve data for {StockTicker}: {e}") 
 				
-		selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
+		selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', '52WeekChange', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'marketCap', 'trailingPE', 'forwardPE', 'forwardEps', 'debtToEquity', 'returnOnEquity', 'recommendationKey', 'firstTradeDateEpochUtc', 'website'])
 		
 		st.write(":blue[Below is some key market data for the selected stock. A low PE ratio could be indicative of good value.]")
 		selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=True, inplace = True)
+		selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
+		selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
 		st.dataframe(selected_ticker_info_df, hide_index=True)
 		st.write("In simple terms, a good P/E (Price divided by Earnings) ratio for an established company is lower than 20 (average across regions and industries is usually 20-25). When looking at the P/E ratio alone, the lower it is, the better.  It is however more meaningful to compare P/E Ratio for a stock to the average of the sector/industry from which it derives the majority of its income.  Also note that it is difficult to set guidelines for startups where future earnings are quite uncertain.")
 
@@ -928,7 +932,7 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 				result = yf.Ticker(ticker).info
 				if result['quoteType'] != 'ETF':
 					try:
-						stock_items = [result['symbol'], result['longName'], result['sector'], result['currency'], result['currentPrice'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['website']]
+						stock_items = [result['symbol'], result['longName'], result['sector'], result['industry'], result['currency'], result['currentPrice'], result['52WeekChange'], result['fiftyTwoWeekLow'], result['fiftyTwoWeekHigh'], millify(result['marketCap']), result['trailingPE'], result['forwardPE'], result['forwardEps'], result['debtToEquity'], result['returnOnEquity'], result['recommendationKey'], result['firstTradeDateEpochUtc'], result['website']]
 						selected_ticker_info.append(stock_items) 
 					except:
 						pass
@@ -940,11 +944,13 @@ if selected == "Portfolio Optimisation Module" and st.session_state['is_logged_i
 						pass
 				
 			if len(selected_ticker_info) > 0:
-				selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'currency', 'currentPrice', 'marketCap', 'trailingPE', 'forwardPE', 'website'])
+				selected_ticker_info_df = pd.DataFrame(selected_ticker_info, columns=['symbol', 'longName', 'sector', 'industry', 'currency', 'currentPrice', '52WeekChange', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'marketCap', 'trailingPE', 'forwardPE', 'forwardEps', 'debtToEquity', 'returnOnEquity', 'recommendationKey', 'firstTradeDateEpochUtc', 'website'])
 				ticker_df = pd.read_csv("Yahoo_Tickers.csv")
 				selected_ticker_info_df = pd.merge(selected_ticker_info_df, ticker_df, left_on='symbol', right_on='Ticker', how='left', indicator=True)
 				selected_ticker_info_df = selected_ticker_info_df.drop(columns=['Ticker', 'Name', '_merge'])
 				selected_ticker_info_df.sort_values(by = 'forwardPE',  ascending=False, inplace = True)
+				selected_ticker_info_df['firstTradeDateEpochUtc'] = pd.to_datetime(selected_ticker_info_df['firstTradeDateEpochUtc'], unit='s')
+				selected_ticker_info_df.rename(columns={'firstTradeDateEpochUtc': 'FirstTradeDate'}, inplace=True)
 				st.dataframe(selected_ticker_info_df, hide_index=True)
 				st.write("In simple terms, a good P/E (Price divided by Earnings) ratio for an established company is lower than 20 (average across regions and industries is usually 20-25). When looking at the P/E ratio alone, the lower it is, the better.  It is however more meaningful to compare P/E Ratio for a stock to the average of the sector/industry from which it derives the majority of its income.  Also note that it is difficult to set guidelines for startups where future earnings are quite uncertain.")
 			else:
